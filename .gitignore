@@ -1,0 +1,5 @@
+/.next
+/static
+ampt-*.tgz
+/node_modules
+node_modules/
