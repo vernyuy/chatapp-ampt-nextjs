@@ -1,17 +1,25 @@
+import Image from "next/image";
 import React from "react";
-
-const IncommingMessage = () => {
+import { messageProps } from "types";
+const IncommingMessage = ({ content, partnerImage }: messageProps) => {
+  console.log(partnerImage);
   return (
     <div>
       <div style={{ display: "flex" }}>
-        <div className="profile-image"></div>
+        <div className="profile-image">
+          <Image
+            src={partnerImage as string}
+            alt="user"
+            height={100}
+            width={100}
+            className="rounded-full"
+          />
+        </div>
         <div style={{ margin: "auto 10px" }}>{Date.now().toPrecision()}</div>
       </div>
       <div className="message-container incoming">
         <div>
-          <div>
-            hello IncommingMessage This is an incomming message from .....
-          </div>
+          <div>{content}</div>
         </div>
       </div>
     </div>

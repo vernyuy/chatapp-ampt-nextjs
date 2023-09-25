@@ -1,3 +1,4 @@
+"use client";
 import { data } from "@ampt/data";
 import Head from "next/head";
 
@@ -6,12 +7,6 @@ import { Button, Navbar, Login } from "@components/index";
 import DataViewer from "@components/DataViewer";
 
 export default function HomePage({ users }) {
-  const user = async () => {
-    const data = await fetch("http://localhost:3000/api/data");
-    console.log("Users:::       ", await data.json());
-  };
-
-  user();
   return (
     <div className="root">
       <Head>

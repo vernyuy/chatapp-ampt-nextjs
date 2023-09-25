@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import Button from "./Button";
 import Link from "next/link";
@@ -8,9 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { data: session } = useSession();
   const router = useRouter();
-  console.log("Username: ", name);
-  console.log("Password: ", password);
-  console.log(session);
+  //   console.log("Username: ", name);s
 
   if (session?.user) {
     router.replace("/home");
@@ -52,7 +51,13 @@ const Login = () => {
         </div>
 
         <div style={{ border: "2px" }}>OR</div>
-        <button onClick={() => signIn()} className="google-btn">
+        <button
+          onClick={() => {
+            const signin = signIn();
+            console.log("Sign::: ", signin);
+          }}
+          className="google-btn"
+        >
           {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             width="2em"

@@ -1,8 +1,9 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
+import { messageProps } from "types";
 
-const OutgoingMessage = () => {
+const OutgoingMessage = ({ content }: messageProps) => {
   const { data: session } = useSession();
   return (
     <div className="">
@@ -23,7 +24,7 @@ const OutgoingMessage = () => {
       </div>
       <div className="message-container outgoing">
         <div>
-          <div>hello IncommingMessage This is an out going message</div>
+          <div>{content}</div>
         </div>
       </div>
     </div>

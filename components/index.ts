@@ -5,6 +5,7 @@ import Register from "./Register";
 import Person from "./Person";
 import IncommingMessage from "./IncommingMessage";
 import OutgoingMessage from "./OutgoingMessage";
+import UserInbox from "./UserInbox";
 export {
   Button,
   Login,
@@ -13,4 +14,5 @@ export {
   Person,
   IncommingMessage,
   OutgoingMessage,
+  UserInbox,
 };

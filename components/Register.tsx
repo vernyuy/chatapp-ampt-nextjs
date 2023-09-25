@@ -26,7 +26,7 @@ const Register = () => {
     // await data.set("user", user);
     // user = JSON.stringify(user) as string;
     const { name, email, image } = user;
-    await fetch("http://localhost:3000/api/data", {
+    await fetch("http://localhost:3000/api/user", {
       method: "POST",
       body: JSON.stringify(session?.user),
     });
