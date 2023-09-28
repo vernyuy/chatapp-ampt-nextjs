@@ -6,6 +6,7 @@ import Person from "./Person";
 import IncommingMessage from "./IncommingMessage";
 import OutgoingMessage from "./OutgoingMessage";
 import UserInbox from "./UserInbox";
+import Post from "./Post";
 export {
   Button,
   Login,
@@ -15,4 +16,5 @@ export {
   IncommingMessage,
   OutgoingMessage,
   UserInbox,
+  Post,
 };

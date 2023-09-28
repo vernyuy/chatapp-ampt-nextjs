@@ -1,3 +1,4 @@
+import { ISODateString } from "next-auth";
 import { MouseEventHandler } from "react";
 
 export interface ButtonProps {
@@ -23,20 +24,29 @@ export interface userInboxProps {
   partnerId: string;
   inboxId: string;
   partnerImage: String;
+  partnerName: String;
 }
 
 export interface messageSentProps {
   partnerId: String;
   id: String;
-  text?: String;
+  text: String;
   image?: String;
 }
 
 export interface messageProps {
   content: string;
   partnerImage?: String;
+  time: ISODateString;
 }
 
 export interface messageData {
   items: any;
+}
+
+export interface postData {
+  image?: string;
+  content: string;
+  owner: string;
+  title: string;
 }

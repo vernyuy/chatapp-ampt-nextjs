@@ -1,9 +1,7 @@
 import { data } from "@ampt/data";
-import { api } from "@ampt/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 import KSUID from "ksuid";
-
-type ResponseData = {};
+import { postData } from "types";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,19 +9,16 @@ export default async function handler(
 ) {
   switch (req.method) {
     case "GET":
-      await data.getByLabel("label1", "Groups").then((da) => {
-        console.log(da);
+      await data.get("Post:*", { meta: true, reverse: true }).then((da) => {
         res.status(200).json(da);
       });
-      return;
     case "POST":
+      const key = KSUID.randomSync.toString();
       if (req.body) {
-        const key = KSUID.randomSync().string;
         await data
-          .set(key, JSON.parse(req.body), {
+          .set(`POST:${key}`, JSON.parse(req.body), {
             meta: true,
-            overwrite: true,
-            exists: false,
+            label1: "POST",
           })
           .then((result) => {
             res.status(200).json(result);

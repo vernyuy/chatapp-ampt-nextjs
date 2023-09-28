@@ -1,46 +1,51 @@
 import { data } from "@ampt/data";
-import { api } from "@ampt/api";
+
 import type { NextApiRequest, NextApiResponse } from "next";
 import KSUID from "ksuid";
-import { messageData, messageSentProps } from "types";
-import { SocketConnection, ws } from "@ampt/sdk";
-type ResponseData = {
-  // messages: Map<string, string>;
-  message: string;
-};
-type msg = {
-  partnerId: String;
-  id: String;
-  text?: String;
-  image?: String;
-};
+import { messageData } from "types";
+// type ResponseData = {
+//   // messages: Map<string, string>;
+//   message: string;
+// };
+// type msg = {
+//   partnerId: String;
+//   id: String;
+//   text?: String;
+//   image?: String;
+// };
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   switch (req.method) {
     case "GET":
-      // console.log(req.url);
-      //   const message = await data.get("message").then((da) => {
-      //   });
       const sender = req.query.sender;
       const receiver = req.query.receiver;
-      await data.getByLabel("label1", "Message").then((data: messageData) => {
-        // console.log(data);
-        const messages = [];
-        data.items.map((message) => {
-          if (
-            (message.value.sender === sender &&
-              message.value.reciever === receiver) ||
-            (message.value.sender === receiver &&
-              message.value.reciever === sender)
-          ) {
-            messages.push(message.value);
-          }
+      await data
+        .getByLabel("label1", "Message", {
+          meta: true,
+          reverse: true,
+          limit: 100,
+        })
+        .then((data: messageData) => {
+          const messages = [];
+          data.items.map((message) => {
+            if (
+              (message.value.sender === sender &&
+                message.value.reciever === receiver) ||
+              (message.value.sender === receiver &&
+                message.value.reciever === sender)
+            ) {
+              messages.push(message);
+            }
+          });
+          console.log(messages);
+
+          messages.sort(function (a, b) {
+            return a.created - b.created;
+          });
+          res.status(200).json(messages);
         });
-        console.log(messages);
-        res.status(200).json(messages);
-      });
       return;
     case "POST":
       if (req.body) {

@@ -19,6 +19,9 @@ export default NextAuth({
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  // pages: {
+  //   signIn: "/",
+  // },
   // logger: {
   //   error(code, metadata) {
   //     log.error(code, metadata);
