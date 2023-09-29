@@ -1,7 +1,7 @@
 import { data } from "@ampt/data";
 import type { NextApiRequest, NextApiResponse } from "next";
 import KSUID from "ksuid";
-import { postData } from "types";
+import { messageData, postData } from "types";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,11 +9,20 @@ export default async function handler(
 ) {
   switch (req.method) {
     case "GET":
-      await data.get("Post:*", { meta: true, reverse: true }).then((da) => {
-        res.status(200).json(da);
-      });
+      await data
+        .get("POST:*", { meta: true, reverse: true })
+        .then((resuslt: messageData) => {
+          // resuslt.
+          res.status(200).json(
+            resuslt.items
+              .sort(function (a, b) {
+                return a.created - b.created;
+              })
+              .reverse()
+          );
+        });
     case "POST":
-      const key = KSUID.randomSync.toString();
+      const key = KSUID.randomSync().string;
       if (req.body) {
         await data
           .set(`POST:${key}`, JSON.parse(req.body), {

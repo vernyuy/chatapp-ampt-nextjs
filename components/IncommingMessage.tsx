@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { messageProps } from "types";
-import moment from "moment";
 const IncommingMessage = ({ content, partnerImage, time }: messageProps) => {
   // console.log(partnerImage);
   const [msgTime, setMsgTime] = useState();
@@ -20,7 +19,7 @@ const IncommingMessage = ({ content, partnerImage, time }: messageProps) => {
           />
         </div>
         <div>
-          <div className="w-full bg-green-100 px-4 py-3 rounded-t-lg rounded-e-lg">
+          <div className="w-full bg-black text-gray-300 border border-green-400 px-4 py-3 rounded-t-lg rounded-e-lg">
             <p>{content}</p>
           </div>
 
@@ -37,19 +36,3 @@ const IncommingMessage = ({ content, partnerImage, time }: messageProps) => {
 };
 
 export default IncommingMessage;
-
-// import useSWR from "swr";
-
-// const fetcher = (key) => fetch(key).then((res) => res.json());
-
-// export default function HostSelector() {
-//   const { incomming } = useSWR("/api/incomming", fetcher);
-
-//   return (
-//     <div>
-//       {incomming?.users?.map(({ key, value }) => (
-//         <p key={key}>{value.name}</p>
-//       ))}
-//     </div>
-//   );
-// }

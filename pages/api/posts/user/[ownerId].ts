@@ -1,7 +1,6 @@
 import { data } from "@ampt/data";
-import { api } from "@ampt/api";
 import type { NextApiRequest, NextApiResponse } from "next";
-import KSUID from "ksuid";
+import { postData } from "types";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,19 +8,20 @@ export default async function handler(
 ) {
   switch (req.method) {
     case "GET":
-      await data.getByLabel("label1", "User").then((da) => {
-        console.log(da);
-        res.status(200).json(da);
+      const userPosts = [];
+      await data.get(`POST:*`).then((da) => {
+        da.items.filter((item: any) => {
+          item.value.owner === req.query.ownerId && userPosts.push(item);
+        });
+
+        console.log(userPosts);
+        res.status(200).json(userPosts);
       });
-      return;
-    case "POST":
+    case "UPDATE":
       if (req.body) {
         await data
-          .set(JSON.parse(req.body).email, JSON.parse(req.body), {
+          .add(`Post:${req.query.post}`, JSON.parse(req.body), {
             meta: true,
-            overwrite: true,
-            exists: false,
-            label1: "User",
           })
           .then((result) => {
             res.status(200).json(result);

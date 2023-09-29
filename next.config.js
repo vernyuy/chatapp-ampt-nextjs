@@ -15,7 +15,21 @@ const config = withAmpt({
   //   localeDetection: false,
   // },
   images: {
-    domains: ["lh3.googleusercontent.com"],
+    domains: ["lh3.googleusercontent.com", "freesvg.org"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "app-storagebucket-kc8pkvvjqamy.s3.us-east-1.amazonaws.com",
+        port: "",
+        pathname: "/storage/posts/**",
+      },
+      {
+        protocol: "https",
+        hostname: "freesvg.org",
+        port: "",
+        pathname: "/img/**",
+      },
+    ],
   },
 });
 

@@ -3,25 +3,25 @@ import { api } from "@ampt/api";
 import type { NextApiRequest, NextApiResponse } from "next";
 import KSUID from "ksuid";
 
-type ResponseData = {};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   switch (req.method) {
     case "GET":
-      const results = await data.remove(["POST:2W3vAnG6AEF7rTNCfTxi5PJLJK1"]);
-      console.log(results);
+      await data.getByLabel("label1", "User").then((da) => {
+        // console.log(da);
+        res.status(200).json(da);
+      });
       return;
     case "POST":
       if (req.body) {
-        const key = KSUID.randomSync().string;
         await data
-          .set(key, JSON.parse(req.body), {
+          .set(JSON.parse(req.body).email, JSON.parse(req.body), {
             meta: true,
             overwrite: true,
             exists: false,
+            label1: "User",
           })
           .then((result) => {
             res.status(200).json(result);

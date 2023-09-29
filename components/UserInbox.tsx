@@ -88,10 +88,10 @@ const UserInbox = ({
   };
   //   getMessages();
   return (
-    <div className="bg-white w-full mx-5 overflow-y-auto overflow-x-hidden rounded-md">
-      <div className="w-full z-[105] bg-white sticky top-0 flex justify-center items-center border-b-[4px] border-gray-100 h-[60px] rounded-t-md px-4 py-8">
+    <div className="bg-black/50 w-full mx-5 overflow-y-auto overflow-x-hidden rounded-md">
+      <div className="w-full z-[105] bg-black sticky top-0 flex justify-center items-center border-b-[4px] border-gray-600 h-[60px] rounded-t-md px-4 py-8">
         <div className="w-full flex items-center justify-between">
-          <div className="w-full max-w-fit bg-white">
+          <div className="w-full max-w-fit bg-black">
             <div className="w-full max-w-fit flex items-center">
               <div className="flex justify-center mr-[8px]">
                 <img
@@ -103,10 +103,10 @@ const UserInbox = ({
                 />
               </div>
               <div>
-                <p className="text-[14px] text-gray-600 font-bold">
+                <p className="text-[14px] text-white font-bold">
                   {partnerName.split(" ")[0]}
                 </p>
-                <p className="text-[13px] text-gray-600">Active Now</p>
+                <p className="text-[13px] text-green-600">Active Now</p>
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@ const UserInbox = ({
               viewBox="0 0 16 16"
             >
               <path
-                fill="#888888"
+                fill="#fff"
                 d="M3 9.5a1.5 1.5 0 1 1 0-3a1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3a1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3a1.5 1.5 0 0 1 0 3z"
               />
             </svg>
@@ -144,10 +144,10 @@ const UserInbox = ({
         )}
       </div>
 
-      <div className="sticky bottom-0 w-full flex items-center bg-white mt-3 px-4">
+      <div className="sticky bottom-0 w-full flex items-center bg-black mt-3 px-4">
         <div
           style={{ display: "flex" }}
-          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent appearance-none dark:text-white focus:outline-none focus:ring-0 peer"
+          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-black appearance-none dark:text-white focus:outline-none focus:ring-0 peer"
         >
           <InputEmojiWithRef
             value={text}

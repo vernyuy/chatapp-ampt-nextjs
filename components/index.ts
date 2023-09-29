@@ -7,6 +7,8 @@ import IncommingMessage from "./IncommingMessage";
 import OutgoingMessage from "./OutgoingMessage";
 import UserInbox from "./UserInbox";
 import Post from "./Post";
+import PostCard from "./PostCard";
+import NewPost from "./NewPost";
 export {
   Button,
   Login,
@@ -17,4 +19,6 @@ export {
   OutgoingMessage,
   UserInbox,
   Post,
+  PostCard,
+  NewPost,
 };

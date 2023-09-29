@@ -7,8 +7,7 @@ export default NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
-      // "570105531549-9a1teok79okq3d8gqhbjp1jfraol77q6.apps.googleusercontent.com",
-      clientSecret: process.env.GOOGLE_SECRET, //"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",
+      clientSecret: process.env.GOOGLE_SECRET,
       httpOptions: {
         timeout: 6000,
       },

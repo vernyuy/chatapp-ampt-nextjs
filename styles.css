@@ -14,14 +14,6 @@ body {
   padding: 0;
   font-family: Poppins;
   overflow: hidden;
-
-  
-  /* background-color: #27292d; */
-  /* }
-::-webkit-scrollbar {
-  width: 10px;
-  border-radius: 5px;
-  /* display: none; */
 }
 
 .nav-container {
@@ -32,6 +24,26 @@ body {
 }
 .nav-container h3 {
   font-size: 20px;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: #000000bb;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 15px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: green;
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #000;
 }
 .nav-content {
   width: 100%;
@@ -113,6 +125,15 @@ main div.hero-section,
   border-radius: 10px;
   width: 100%;
   transition: ease-in-out;
+  background: linear-gradient(
+    90deg,
+    rgba(241, 39, 17, 1) 0%,
+    rgba(245, 175, 25, 1) 100%,
+    rgba(250, 0, 101, 1) 100%
+  );
+}
+
+.bg-gradient {
   background: linear-gradient(
     90deg,
     rgba(241, 39, 17, 1) 0%,
