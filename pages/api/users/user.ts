@@ -15,18 +15,27 @@ export default async function handler(
       });
       return;
     case "POST":
-      if (req.body) {
-        await data
-          .set(JSON.parse(req.body).email, JSON.parse(req.body), {
-            meta: true,
-            overwrite: true,
-            exists: false,
-            label1: "User",
-          })
-          .then((result) => {
-            res.status(200).json(result);
-          });
-        return;
+      const verifyUser = await data.get(JSON.parse(req.body).email);
+      console.log("Verification: ", verifyUser);
+      if (!verifyUser) {
+        console.log("User Verification");
+        if (req.body) {
+          await data
+            .set(JSON.parse(req.body).email, JSON.parse(req.body), {
+              meta: true,
+              overwrite: true,
+              exists: false,
+              label1: "User",
+            })
+            .then((result) => {
+              res.status(200).json(result);
+            });
+          return;
+        }
+      } else {
+        return res.status(200).json({
+          user: verifyUser,
+        });
       }
       return;
   }

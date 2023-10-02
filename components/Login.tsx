@@ -4,9 +4,21 @@ const Login = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
+  const save_user = async (user) => {
+    const { name, email, image } = user;
+    await fetch("http://localhost:3000/api/users/user", {
+      method: "POST",
+      body: JSON.stringify(session?.user),
+    });
+  };
+
   if (session?.user) {
+    save_user(session?.user);
     router.replace("/home");
   }
+  // if (session?.user) {
+  //   router.replace("/home");
+  // }
   return (
     <div className="body">
       <style jsx>
