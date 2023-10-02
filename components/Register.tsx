@@ -15,7 +15,7 @@ const Register = () => {
 
   const save_user = async (user) => {
     const { name, email, image } = user;
-    await fetch("http://localhost:3000/api/user", {
+    await fetch("http://localhost:3000/api/users/user", {
       method: "POST",
       body: JSON.stringify(session?.user),
     });
