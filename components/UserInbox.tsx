@@ -51,16 +51,17 @@ const UserInbox = ({
     }
   }, [ws.lastMessage, setMessageHistory, messages.length, connectionStatus]);
 
-  const handleClickSendMessage = useCallback(() => {
-    console.log("Message body", text);
+  const handleClickSendMessage = useCallback((msgBody) => {
+    console.log("Message body", msgBody);
     ws.sendMessage(
       JSON.stringify({
         reciever: partnerId,
         sender: inboxId,
-        text: text,
+        text: msgBody,
         image: "image",
       })
     );
+    // setText("");
   }, []);
 
   const sendMessage = async () => {
@@ -149,21 +150,22 @@ const UserInbox = ({
           style={{ display: "flex" }}
           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-black appearance-none dark:text-white focus:outline-none focus:ring-0 peer"
         >
-          <InputEmojiWithRef
+          <input
             value={text}
-            onChange={setText}
-            //   cleanOnEnter
+            onChange={(e) => {
+              setText(e.target.value);
+              console.log(text);
+            }}
             placeholder="Type a message"
+            className="h-9 rounded-full w-full px-3 text-gray-800"
           />
         </div>
         <button
           className="max-w-fit pl-5"
           onClick={(e) => {
             e.preventDefault();
-            // sendMessage();
-            handleClickSendMessage();
-            // setText("");
-            // console.log(text);
+            handleClickSendMessage(text);
+            console.log(text);
           }}
         >
           <svg

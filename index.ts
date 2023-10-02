@@ -30,7 +30,6 @@ ws.on("disconnected", async (connection: SocketConnection) => {
 ws.on<messageSentProps>(
   "message",
   async (connection: SocketConnection, message) => {
-    console.log(`message received:`, message);
     const { connectionId } = connection;
     const existingConnection = await data.get(`connection:${connectionId}`);
     if (existingConnection) {
@@ -42,10 +41,17 @@ ws.on<messageSentProps>(
         label1: "Message",
       });
       if (await connection.isConnected()) {
-        await events.publish("message-sent", {
-          message: message,
-          connectionId: connection.connectionId,
-        });
+        await events
+          .publish("new-message", {
+            message: message,
+            connectionId: connection.connectionId,
+          })
+          .then((data) => {
+            console.log(data);
+            console.log("Published");
+            events.publish("new-message");
+          });
+        // console.log(test);
         console.log("Connected");
       } else {
         console.log(
@@ -55,10 +61,14 @@ ws.on<messageSentProps>(
     }
   }
 );
-events.on("message-sent", { timeout: 5000 }, async ({ body }) => {
+
+// events.on("new-message", async () => {
+//   console.log("hello Event");
+// });
+events.on("new-message", { timeout: 10000 }, async ({ body }) => {
+  console.log("hello Event");
   console.log("Event body", body);
   const { connectionId, message } = body;
-
   const sender = message.sender;
   const receiver = message.reciever;
 
@@ -104,14 +114,3 @@ events.on("message-sent", { timeout: 5000 }, async ({ body }) => {
     //   console.error(`Connection ${connectionId} is no longer connected`);
   }
 });
-
-// events.on("async-task-complete", async ({ body }) => {
-//   const { connectionId, startTime } = body;
-
-//   if (await ws.isConnected(connectionId)) {
-//     const duration = Math.floor((Date.now() - startTime) / 1000);
-//     await ws.send(connectionId, `Task complete after ${duration}s`);
-//   } else {
-//     console.error(`Connection ${connectionId} is no longer connected`);
-//   }
-// });
