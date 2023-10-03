@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 const Navbar = ({ b_color, c_color }) => {
-  console.log(b_color);
   const { data: session } = useSession();
   return (
     <div className="bg-black text-white w-full flex justify-between items-center px-5 py-1">
@@ -37,7 +36,6 @@ const Navbar = ({ b_color, c_color }) => {
                 height="2em"
                 viewBox="0 0 32 32"
                 color={b_color}
-                // className={`text-[${b_color}]`}
               >
                 <path
                   fill="currentColor"
@@ -47,42 +45,47 @@ const Navbar = ({ b_color, c_color }) => {
             </Link>
             Blogs
           </div>
+          {session?.user && (
+            <div
+              className={`mr-12 text-[12px] hover:cursor-pointer hover:border-b-[1.5px] text-[${c_color}]  border-gray-600`}
+            >
+              <Link href={"/home"}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2em"
+                  height="2em"
+                  viewBox="0 0 256 256"
+                  color={c_color}
+                >
+                  <path
+                    fill="currentColor"
+                    d="M236.06 187.69A84 84 0 0 0 172.29 68.9a84 84 0 1 0-152.35 70.79l-7.24 25.36A18 18 0 0 0 35 187.3l25.36-7.24a84.27 84.27 0 0 0 23.36 7a84.05 84.05 0 0 0 112 41l25.36 7.24a18 18 0 0 0 22.25-22.25Zm-207.7-23.47Zm33.17-9a12 12 0 0 0-3.3.46l-19.49 5.57l5.57-19.49a12 12 0 0 0-1-9.05a60 60 0 1 1 24 24a11.91 11.91 0 0 0-5.78-1.48Zm150.16 34.54l5.57 19.49l-19.49-5.57a12 12 0 0 0-9.05 1A60.06 60.06 0 0 1 111 186.63a83.93 83.93 0 0 0 68.55-91.37a60 60 0 0 1 33.16 85.46a12 12 0 0 0-1.02 9.05Z"
+                  ></path>
+                </svg>
+              </Link>
+              <p className="">Chats</p>
+            </div>
+          )}
 
-          <div
-            className={`mr-12 text-[12px] hover:cursor-pointer hover:border-b-[1.5px] text-[${c_color}]  border-gray-600`}
-          >
-            <Link href={"/home"}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2em"
-                height="2em"
-                viewBox="0 0 256 256"
-                color={c_color}
-              >
-                <path
-                  fill="currentColor"
-                  d="M236.06 187.69A84 84 0 0 0 172.29 68.9a84 84 0 1 0-152.35 70.79l-7.24 25.36A18 18 0 0 0 35 187.3l25.36-7.24a84.27 84.27 0 0 0 23.36 7a84.05 84.05 0 0 0 112 41l25.36 7.24a18 18 0 0 0 22.25-22.25Zm-207.7-23.47Zm33.17-9a12 12 0 0 0-3.3.46l-19.49 5.57l5.57-19.49a12 12 0 0 0-1-9.05a60 60 0 1 1 24 24a11.91 11.91 0 0 0-5.78-1.48Zm150.16 34.54l5.57 19.49l-19.49-5.57a12 12 0 0 0-9.05 1A60.06 60.06 0 0 1 111 186.63a83.93 83.93 0 0 0 68.55-91.37a60 60 0 0 1 33.16 85.46a12 12 0 0 0-1.02 9.05Z"
-                ></path>
-              </svg>
-            </Link>
-            <p className="">Chats</p>
-          </div>
-          <div className="flex justify-center mr-[8px] bg-green-600 p-[2px] rounded-full">
-            <Image
-              src={session?.user.image}
-              alt="user"
-              height={33}
-              width={33}
-              className="rounded-full h-8 w-8 min-h-9 min-w-9"
-            />
-          </div>
-          <p className="text-center text-[14px] text-gray-600 font-bold">
-            {session?.user.name.split(" ")[0]}
-          </p>
+          {session?.user && (
+            <div className="flex justify-center mr-[8px] bg-green-600 p-[2px] rounded-full">
+              <Image
+                src={session?.user.image}
+                alt="user"
+                height={33}
+                width={33}
+                className="rounded-full h-8 w-8 min-h-9 min-w-9"
+              />
+            </div>
+          )}
+          {session?.user && (
+            <p className="text-center text-[14px] text-gray-600 font-bold">
+              {session?.user.name.split(" ")[0]}
+            </p>
+          )}
         </div>
       </div>
     </div>
-    // </div>
   );
 };
 

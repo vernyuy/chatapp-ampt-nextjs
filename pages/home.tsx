@@ -19,7 +19,6 @@ const Home = () => {
   const [partnerName, setPartnerName] = useState("");
   const [inbox, setinbox] = useState("");
   const [userPosts, setUserPosts] = useState([]);
-  let test = [];
   const router = useRouter();
   useEffect(() => {
     posts();
@@ -29,7 +28,6 @@ const Home = () => {
 
     user();
   }, []);
-  console.log(userPosts);
 
   const user = async () => {
     const data = await fetch("http://localhost:3000/api/users/user");
@@ -77,7 +75,7 @@ const Home = () => {
 
           {/* inbox nav */}
           {people.map((p) =>
-            p.key === session?.user?.email ? (
+            p.key === `USER:${session?.user?.email}` ? (
               <div key={p.key}></div>
             ) : (
               <div
@@ -187,7 +185,6 @@ const Home = () => {
         </div>
       </div>
     </div>
-    // </div>
   );
 };
 

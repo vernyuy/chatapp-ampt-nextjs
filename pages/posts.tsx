@@ -2,10 +2,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from "react";
 import { PostCard, NewPost, Navbar } from "@components/index";
-import { postData } from "types";
-import { timeEnd } from "console";
 import { useSession } from "next-auth/react";
-import { get } from "http";
 const posts = () => {
   const [createPost, setcreatePost] = useState(false);
   const [title, settitle] = useState("");
@@ -29,7 +26,6 @@ const posts = () => {
         owner: owner,
       }),
     });
-    console.log(res);
     getPosts();
   };
 
@@ -37,7 +33,6 @@ const posts = () => {
     const res = await fetch("/api/posts/post");
     const data = await res.json();
     setposts(data);
-    console.log(data);
   };
 
   const uploadToServer = async (e) => {
@@ -56,7 +51,6 @@ const posts = () => {
       content: content,
       owner: owner,
     });
-    console.log(response);
   };
   return (
     <div>

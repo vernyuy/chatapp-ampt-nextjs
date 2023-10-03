@@ -16,9 +16,6 @@ const Login = () => {
     save_user(session?.user);
     router.replace("/home");
   }
-  // if (session?.user) {
-  //   router.replace("/home");
-  // }
   return (
     <div className="body">
       <style jsx>

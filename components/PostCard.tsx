@@ -9,10 +9,9 @@ const PostCard = ({ title, image, owner, created, content }) => {
   }, []);
 
   const getOwnerInfo = async () => {
-    const res = await fetch(`/api/users/${owner}`);
+    const res = await fetch(`/api/users/USER:${owner}`);
     const info = await res.json();
     setownerInfo(info);
-    console.log(info);
   };
 
   const [createPost, setcreatePost] = useState(false);

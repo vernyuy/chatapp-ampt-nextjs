@@ -10,7 +10,6 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       await data.get(`${req.query.userId}`).then((da) => {
-        console.log(da);
         res.status(200).json(da);
       });
       return;

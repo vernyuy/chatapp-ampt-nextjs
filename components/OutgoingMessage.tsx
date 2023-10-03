@@ -1,11 +1,8 @@
 import moment from "moment";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { messageProps } from "types";
 
 const OutgoingMessage = ({ content, time }: messageProps) => {
-  const { data: session } = useSession();
   const [msgTime, setMsgTime] = useState("");
 
   useEffect(() => {
@@ -29,19 +26,7 @@ const OutgoingMessage = ({ content, time }: messageProps) => {
             </p>
           </div>
         </div>
-        <div className="min-w-[44px] relative ml-2">
-          {/* {session ? (
-            <Image
-              src={`${session?.user?.image}`}
-              alt="user"
-              height={10}
-              width={10}
-              className="rounded-full h-10 w-10 min-h-10 min-w-10 absolute -bottom-[10px]"
-            />
-          ) : (
-            <></>
-          )} */}
-        </div>
+        <div className="min-w-[44px] relative ml-2"></div>
       </div>
     </div>
   );

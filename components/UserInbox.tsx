@@ -5,6 +5,7 @@ import InputEmojiWithRef from "react-input-emoji";
 import { userInboxProps, messageSentProps } from "types";
 import Image from "next/image";
 import useWebSocket, { ReadyState } from "react-use-websocket";
+import useSWR from "swr";
 
 const UserInbox = ({
   partnerId,
@@ -15,79 +16,40 @@ const UserInbox = ({
   const ref = useRef<HTMLDivElement>(null);
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
-  // console.log(partnerImage);
 
-  const wsUrl = "wss://bold-project-o6zgt.ampt.app";
-  const [messageHistory, setMessageHistory] = useState([]);
-  const [processing, setProcessing] = useState(false);
-  const ws = useWebSocket(wsUrl);
+  const fetcher = (url) => fetch(url).then((r) => r.json());
 
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: "Connecting",
-    [ReadyState.OPEN]: "Open",
-    [ReadyState.CLOSING]: "Closing",
-    [ReadyState.CLOSED]: "Closed",
-    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
-  }[ws.readyState];
+  const { data } = useSWR(
+    `http://localhost:3000/api/messages/${inboxId}/${partnerId}`,
+    fetcher,
+    {
+      refreshInterval: 10,
+      revalidateOnFocus: false,
+      revalidateIfStale: false,
+      revalidateOnReconnect: false,
+    }
+  );
 
   useEffect(() => {
-    getMessages();
-  }, [partnerId]);
-  useEffect(() => {
-    // getMessages();
-    if (ws.lastMessage !== null) {
-      console.log(JSON.parse(ws.lastMessage.data));
-      setMessages(JSON.parse(ws.lastMessage.data));
-      setMessageHistory((prev) => prev.concat(ws.lastMessage));
-    }
-    if (connectionStatus === "Close") {
-      // openSocket()
-    }
-    if (messages.length) {
+    if (data?.length) {
       ref.current?.scrollIntoView({
         behavior: "smooth",
         block: "end",
       });
     }
-  }, [ws.lastMessage, setMessageHistory, messages.length, connectionStatus]);
-
-  const handleClickSendMessage = useCallback((msgBody) => {
-    console.log("Message body", msgBody);
-    ws.sendMessage(
-      JSON.stringify({
-        reciever: partnerId,
-        sender: inboxId,
-        text: msgBody,
-        image: "image",
-      })
-    );
-    // setText("");
-  }, []);
-
-  const sendMessage = async () => {
-    const res = await fetch("http://localhost:3000/api/message", {
+  }, [partnerId, messages.length, data && data.length]);
+  const sendMessage = async (msgBody) => {
+    const res = await fetch("http://localhost:3000/api/messages/message", {
       method: "POST",
       body: JSON.stringify({
         reciever: partnerId,
         sender: inboxId,
-        text: text,
+        text: msgBody,
         image: "image",
       }),
     });
-    console.log(res.status);
   };
 
-  const getMessages = async () => {
-    const response = await fetch(
-      `http://localhost:3000/api/messages/${inboxId}/${partnerId}`,
-      {}
-    );
-    const data = await response.json();
-    // console.log(data);
-    setMessages(data);
-    return data;
-  };
-  //   getMessages();
   return (
     <div className="bg-black/50 w-full mx-5 overflow-y-auto overflow-x-hidden rounded-md">
       <div className="w-full z-[105] bg-black sticky top-0 flex justify-center items-center border-b-[4px] border-gray-600 h-[60px] rounded-t-md px-4 py-8">
@@ -127,22 +89,23 @@ const UserInbox = ({
       </div>
 
       <div className="px-5 py-6 w-full">
-        {messages.map((message) =>
-          message.value.sender === inboxId ? (
-            <OutgoingMessage
-              key={message.key}
-              content={message.value.text}
-              time={message.created}
-            />
-          ) : (
-            <IncommingMessage
-              key={message.key}
-              content={message.value.text}
-              time={message.created}
-              partnerImage={partnerImage}
-            />
-          )
-        )}
+        {data &&
+          data.map((message) =>
+            message.value.sender === inboxId ? (
+              <OutgoingMessage
+                key={message.key}
+                content={message.value.text}
+                time={message.created}
+              />
+            ) : (
+              <IncommingMessage
+                key={message.key}
+                content={message.value.text}
+                time={message.created}
+                partnerImage={partnerImage}
+              />
+            )
+          )}
       </div>
 
       <div className="sticky bottom-0 w-full flex items-center bg-black mt-3 px-4">
@@ -150,23 +113,35 @@ const UserInbox = ({
           style={{ display: "flex" }}
           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-black appearance-none dark:text-white focus:outline-none focus:ring-0 peer"
         >
-          <input
-            value={text}
-            onChange={(e) => {
-              setText(e.target.value);
-              console.log(text);
+          <form
+            action=""
+            onSubmit={(e) => {
+              e.preventDefault();
+              sendMessage(text);
+              setText("");
             }}
-            placeholder="Type a message"
-            className="h-9 rounded-full w-full px-3 text-gray-800"
-          />
+          >
+            <input
+              value={text}
+              onChange={(e) => {
+                setText(e.target.value);
+              }}
+              placeholder="Type a message"
+              className="h-9 rounded-full w-full px-3 text-gray-800"
+            />
+          </form>
         </div>
         <button
           className="max-w-fit pl-5"
-          onClick={(e) => {
+          type="submit"
+          onSubmit={(e) => {
             e.preventDefault();
-            handleClickSendMessage(text);
-            console.log(text);
+            sendMessage(text);
           }}
+          // onClick={(e) => {
+          //   e.preventDefault();
+          //   sendMessage(text);
+          // }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

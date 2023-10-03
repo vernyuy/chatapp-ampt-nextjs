@@ -9,12 +9,10 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       const userPosts = [];
-      await data.get(`POST:*`).then((da) => {
-        da.items.filter((item: any) => {
+      await data.get(`POST:*`).then((data) => {
+        data.items.filter((item: any) => {
           item.value.owner === req.query.ownerId && userPosts.push(item);
         });
-
-        console.log(userPosts);
         res.status(200).json(userPosts);
       });
     case "UPDATE":

@@ -9,19 +9,16 @@ export default async function handler(
 ) {
   switch (req.method) {
     case "GET":
-      await data.getByLabel("label1", "User").then((da) => {
-        // console.log(da);
-        res.status(200).json(da);
+      await data.getByLabel("label1", "User").then((result) => {
+        res.status(200).json(result);
       });
       return;
     case "POST":
-      const verifyUser = await data.get(JSON.parse(req.body).email);
-      console.log("Verification: ", verifyUser);
+      const verifyUser = await data.get(`USER:${JSON.parse(req.body).email}`);
       if (!verifyUser) {
-        console.log("User Verification");
         if (req.body) {
           await data
-            .set(JSON.parse(req.body).email, JSON.parse(req.body), {
+            .set(`USER:${JSON.parse(req.body).email}`, JSON.parse(req.body), {
               meta: true,
               overwrite: true,
               exists: false,

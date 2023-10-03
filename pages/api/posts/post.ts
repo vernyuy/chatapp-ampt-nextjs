@@ -1,7 +1,7 @@
 import { data } from "@ampt/data";
 import type { NextApiRequest, NextApiResponse } from "next";
 import KSUID from "ksuid";
-import { messageData, postData } from "types";
+import { messageData } from "types";
 
 export default async function handler(
   req: NextApiRequest,

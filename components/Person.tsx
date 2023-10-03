@@ -30,18 +30,6 @@ const Person = ({ name, email, image }: personProps) => {
         </div>
       </div>
     </div>
-    // <div className="person-container">
-    //   <div className="person-info">
-    //     <div className="profile-image">
-    //       <Image src={image} alt="user" height={100} width={100} />
-    //     </div>
-
-    //     <div className="person-name">
-    //       {name} <br />
-    //       {/* <span style={{ fontSize: "0.6rem" }}>{email}</span>  */}
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

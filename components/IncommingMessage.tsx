@@ -1,9 +1,7 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { messageProps } from "types";
 const IncommingMessage = ({ content, partnerImage, time }: messageProps) => {
-  // console.log(partnerImage);
-  const [msgTime, setMsgTime] = useState();
   return (
     <div>
       <div className="w-full h-full max-w-[80%] my-2 flex justify-center">

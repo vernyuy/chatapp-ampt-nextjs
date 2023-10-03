@@ -12,7 +12,6 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       const results = await data.remove(["POST:2W3vAnG6AEF7rTNCfTxi5PJLJK1"]);
-      console.log(results);
       return;
     case "POST":
       if (req.body) {

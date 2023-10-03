@@ -22,11 +22,7 @@ export default async function handler(
       const sender = req.query.sender;
       const receiver = req.query.receiver;
       await data
-        .getByLabel("label1", "Message", {
-          meta: true,
-          reverse: true,
-          limit: 100,
-        })
+        .get("MESSAGE:*", { meta: true, reverse: true })
         .then((data: messageData) => {
           const messages = [];
           data.items.map((message) => {
@@ -39,13 +35,39 @@ export default async function handler(
               messages.push(message);
             }
           });
-          console.log(messages);
+          // console.log(messages);
 
           messages.sort(function (a, b) {
             return a.created - b.created;
           });
           res.status(200).json(messages);
         });
+      // res.status(200).json(data);
+      // });
+      // .getByLabel("label1", "Message", {
+      //   meta: true,
+      //   reverse: true,
+      //   limit: 100,
+      // })
+      // .then((data: messageData) => {
+      //   const messages = [];
+      //   data.items.map((message) => {
+      //     if (
+      //       (message.value.sender === sender &&
+      //         message.value.reciever === receiver) ||
+      //       (message.value.sender === receiver &&
+      //         message.value.reciever === sender)
+      //     ) {
+      //       messages.push(message);
+      //     }
+      //   });
+      //   console.log(messages);
+
+      //   messages.sort(function (a, b) {
+      //     return a.created - b.created;
+      //   });
+      //   res.status(200).json(messages);
+      // });
       return;
     case "POST":
       if (req.body) {
